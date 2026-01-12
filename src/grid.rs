@@ -1,4 +1,8 @@
-use crate::cell::{Cell, CellType};
+use crate::{
+    cell::{Cell, CellType},
+    presets::{Preset, PresetProvider},
+    PresetT,
+};
 use rand::Rng;
 use std::collections::HashMap;
 
@@ -13,7 +17,7 @@ pub struct Grid {
 
 // Chunk configuration for batched processing
 pub const CHUNK_SIZE: u32 = 32;
-pub const BOUNDARY_RADIUS: u32 = 6;  // Radius for neighbor lookups (max interaction distance)
+pub const BOUNDARY_RADIUS: u32 = 6; // Radius for neighbor lookups (max interaction distance)
 
 impl Grid {
     pub fn new(width: u32, height: u32) -> Self {
@@ -27,12 +31,16 @@ impl Grid {
         }
     }
 
+    // pub fn initialize_random(&mut self, densities: impl PresetProvider) {
     pub fn initialize_random(&mut self, densities: &serde_json::Map<String, serde_json::Value>) {
         let mut rng = rand::thread_rng();
-        
+
         // Start all cells as Black
         self.cells.fill(Cell::new(CellType::Black));
 
+        // PERF: make this constant, similarly to how I did on the Presets (except this
+        // is your 'registry' of cell types, which can be properly constant).
+        // Your look-ups on this should always be O(1), it's a known set of types.
         let cell_types = [
             ("Black", CellType::Black),
             ("Green", CellType::Green),
@@ -72,6 +80,8 @@ impl Grid {
             ("Tint", CellType::Tint),
             ("Shade", CellType::Shade),
         ];
+
+        // PERF:[wtf] is going on here???? bruh...
 
         // Process each cell type and only update if it should be that type
         for (name, cell_type) in cell_types.iter() {
@@ -127,7 +137,7 @@ impl Grid {
     }
 
     /// Copy boundary region for a chunk to boundary_buffer for isolated reads
-    /// 
+    ///
     /// This must be called sequentially before parallel chunk processing.
     /// Since chunks at (cx%2, cy%2) don't overlap, this is called in layers.
     pub fn copy_chunk_boundary(&mut self, chunk_x: u32, chunk_y: u32) {
@@ -162,16 +172,18 @@ impl Grid {
         let width = self.width as usize;
         let x_usize = x as usize;
         let y_usize = y as usize;
-        
+
         // Direct array access without bounds checking for interior cells
         // Much faster than calling get_cell_from_boundary 8 times
         let x_i = x as i32;
         let y_i = y as i32;
-        
+
         // Check all 8 neighbors
         for dy in -1..=1i32 {
             for dx in -1..=1i32 {
-                if dx == 0 && dy == 0 { continue; }
+                if dx == 0 && dy == 0 {
+                    continue;
+                }
                 let nx = x_i + dx;
                 let ny = y_i + dy;
                 if nx >= 0 && ny >= 0 && (nx as u32) < self.width && (ny as u32) < self.height {
@@ -187,13 +199,19 @@ impl Grid {
 
     /// Count in radius using boundary buffer for isolation (optimized)
     #[inline]
-    pub fn count_in_radius_isolated(&self, x: u32, y: u32, cell_type: CellType, radius: u32) -> usize {
+    pub fn count_in_radius_isolated(
+        &self,
+        x: u32,
+        y: u32,
+        cell_type: CellType,
+        radius: u32,
+    ) -> usize {
         let mut count = 0;
         let x_start = if x < radius { 0 } else { x - radius };
         let x_end = (x + radius + 1).min(self.width);
         let y_start = if y < radius { 0 } else { y - radius };
         let y_end = (y + radius + 1).min(self.height);
-        
+
         // Row-major iteration for cache efficiency
         for cy in y_start..y_end {
             let row_base = (cy * self.width) as usize;
@@ -261,7 +279,7 @@ impl Grid {
 
     pub fn get_population_counts(&self) -> String {
         let mut counts: HashMap<String, u32> = HashMap::new();
-        
+
         for cell in self.cells.iter() {
             let name = match cell.cell_type {
                 CellType::Black => "Black",

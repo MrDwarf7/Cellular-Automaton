@@ -1,22 +1,22 @@
 #![allow(dead_code)]
 
 pub mod cell;
-pub mod grid;
-pub mod rules;
-pub mod stats;
-pub mod presets;
 pub mod genetics;
+pub mod grid;
+pub mod logging;
+pub mod metrics;
 pub mod ml_layer;
 pub mod nca;
-pub mod metrics;
-pub mod logging;
+pub mod presets;
+pub mod rules;
+pub mod stats;
 
 pub use cell::{Cell, CellType, Genes};
+pub use genetics::check_reproduction;
 pub use grid::Grid;
+pub use presets::{load_preset, PresetT};
 pub use rules::apply_rules;
 pub use stats::{calculate_stats, get_ecosystem_status};
-pub use presets::{load_preset, Preset};
-pub use genetics::check_reproduction;
 
 pub struct Simulator {
     pub grid: Grid,
@@ -33,9 +33,9 @@ impl Simulator {
         }
     }
 
-    pub fn initialize_random(&mut self, densities: &serde_json::Map<String, serde_json::Value>) {
-        self.grid.initialize_random(densities);
-    }
+    // pub fn initialize_random(&mut self, densities: &serde_json::Map<String, serde_json::Value>) {
+    //     self.grid.initialize_random(densities);
+    // }
 
     pub fn tick(&mut self) {
         apply_rules(&mut self.grid);
@@ -92,16 +92,15 @@ impl Simulator {
             "disease_pressure": stats.disease_pressure,
             "diversity_index": stats.diversity_index,
             "stability": stats.stability,
-        })).unwrap_or_default()
+        }))
+        .unwrap_or_default()
     }
 
     pub fn load_preset(&mut self, preset_name: &str) -> bool {
-        if let Some(densities) = presets::load_preset(preset_name) {
-            self.grid.initialize_random(&densities);
-            true
-        } else {
-            false
+        if let presets::Preset::RandomFallback = presets::Preset::from(preset_name) {
+            return false;
         }
+        return true;
     }
 
     pub fn list_presets() -> Vec<String> {

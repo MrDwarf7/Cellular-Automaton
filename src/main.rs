@@ -1,24 +1,26 @@
-use iced::widget::{container, column, row, button, text, slider, text_input};
-use iced::{Element, Subscription, Settings, window, time, Application, Command};
+use iced::widget::{button, column, container, row, slider, text, text_input};
+use iced::{time, window, Application, Command, Element, Settings, Subscription};
 use std::sync::{Arc, Mutex};
 use std::time::{Duration, Instant};
 
 pub mod cell;
-pub mod grid;
-pub mod rules;
-pub mod stats;
-pub mod presets;
 pub mod genetics;
+pub mod grid;
+pub mod logging;
+pub mod metrics;
 pub mod ml_layer;
 pub mod nca;
+pub mod presets;
+pub mod rules;
+pub mod stats;
 pub mod ui;
-pub mod metrics;
-pub mod logging;
 
 use grid::Grid;
-use ui::GridDisplay;
-use metrics::MetricsCollector;
 use logging::init_logging;
+use metrics::MetricsCollector;
+use ui::GridDisplay;
+
+use crate::presets::{Preset, PresetT};
 
 const GRID_WIDTH: u32 = 500;
 const GRID_HEIGHT: u32 = 500;
@@ -33,7 +35,7 @@ enum Message {
     Pause,
     Reset,
     SpeedChanged(f32),
-    PresetInputChanged(String),
+    PresetInputChanged(String), // PERF: store a Preset enum type not a String
     LoadPreset,
     Tick,
 }
@@ -47,6 +49,7 @@ struct CellularApp {
     is_running: bool,
     tick_count: u64,
     speed: f32,
+    // selected_preset: Preset, // PERF: use the Preset enum type directly
     selected_preset: String,
     tick_accumulator: f32,
     metrics: Arc<Mutex<MetricsCollector>>,
@@ -62,31 +65,41 @@ impl Application for CellularApp {
     fn new(_flags: Self::Flags) -> (Self, Command<Message>) {
         // Initialize logging
         let _ = init_logging();
-        
+
         let mut grid = Grid::new(GRID_WIDTH, GRID_HEIGHT);
-        
+
         // Initialize with sparse genesis preset by default
-        if let Some(densities) = presets::load_preset("sparse_genesis") {
-            grid.initialize_random(&densities);
-        } else {
-            // Fallback: random initialization if preset fails
-            grid.initialize_random(&serde_json::json!({
-                "Green": 0.5,
-                "Orange": 0.2,
-                "Blue": 0.3,
-                "Purple": 0.1,
-            }).as_object().unwrap().clone());
-        }
-        
+
+        // TODO:[better_pattern] : load like this, let initialize_random handle the fallback
+        let preset = presets::Preset::from("sparse_genesis");
+        grid.initialize_random(&preset.data());
+
+        // if let Some(densities) = presets::load_preset("sparse_genesis") {
+        //     grid.initialize_random(&densities);
+        // } else {
+        //     // PERF:[wtf] is this
+        //     grid.initialize_random(
+        //         &serde_json::json!({
+        //             "Green": 0.5,
+        //             "Orange": 0.2,
+        //             "Blue": 0.3,
+        //             "Purple": 0.1,
+        //         })
+        //         .as_object()
+        //         .unwrap()
+        //         .clone(),
+        //     );
+        // }
+
         logging::log_startup_info(GRID_WIDTH, GRID_HEIGHT, "sparse_genesis");
-        
+
         (
             CellularApp {
                 grid: Arc::new(Mutex::new(grid)),
                 is_running: false,
                 tick_count: 0,
                 speed: 1.0,
-                selected_preset: "sparse_genesis".to_string(),
+                selected_preset: preset.name().to_string(),
                 tick_accumulator: 0.0,
                 metrics: Arc::new(Mutex::new(MetricsCollector::new())),
                 last_tick_time: Instant::now(),
@@ -100,6 +113,7 @@ impl Application for CellularApp {
     }
 
     fn update(&mut self, message: Message) -> Command<Message> {
+        let preset = &self.selected_preset.clone();
         match message {
             Message::Play => {
                 self.is_running = true;
@@ -112,8 +126,11 @@ impl Application for CellularApp {
                     let width = grid.width;
                     let height = grid.height;
                     *grid = Grid::new(width, height);
+
+                    // TODO:[better_pattern] : use the same pattern as above in new() fn
+                    //
                     // Reinitialize with current preset
-                    if let Some(densities) = presets::load_preset(&self.selected_preset) {
+                    if let Some(densities) = presets::load_preset(preset) {
                         grid.initialize_random(&densities);
                     } else {
                         // Fallback to balanced
@@ -133,7 +150,8 @@ impl Application for CellularApp {
             }
             Message::LoadPreset => {
                 if let Ok(mut grid) = self.grid.lock() {
-                    if let Some(densities) = presets::load_preset(&self.selected_preset) {
+                    // TODO:[better_pattern] : use the same pattern as above in new() fn
+                    if let Some(densities) = presets::load_preset(preset) {
                         grid.initialize_random(&densities);
                         self.tick_count = 0;
                     }
@@ -143,26 +161,30 @@ impl Application for CellularApp {
                 if self.is_running {
                     // Accumulate tick time based on speed
                     self.tick_accumulator += self.speed;
-                    
+
                     // Execute ticks when accumulated time >= 1.0
                     while self.tick_accumulator >= 1.0 {
                         let tick_start = Instant::now();
                         if let Ok(mut grid) = self.grid.lock() {
                             rules::apply_rules(&mut grid);
                             self.tick_count += 1;
-                            
+
                             // Record tick performance
                             let tick_duration = tick_start.elapsed();
                             if let Ok(mut metrics) = self.metrics.lock() {
                                 metrics.record_tick(tick_duration);
                                 let cells = (grid.width as u64) * (grid.height as u64);
-                                logging::log_tick_performance(self.tick_count, tick_duration.as_secs_f64() * 1000.0, cells);
+                                logging::log_tick_performance(
+                                    self.tick_count,
+                                    tick_duration.as_secs_f64() * 1000.0,
+                                    cells,
+                                );
                             }
                         }
                         self.tick_accumulator -= 1.0;
                     }
                 }
-                
+
                 // Record frame and update metrics
                 if let Ok(mut metrics) = self.metrics.lock() {
                     metrics.record_frame();
@@ -183,28 +205,25 @@ impl Application for CellularApp {
 
     fn view(&self) -> Element<'_, Message> {
         let preset_label = text("Preset:").size(16);
-        let preset_input = text_input("Enter preset name", &self.selected_preset)
-            .on_input(Message::PresetInputChanged);
+        let preset = &self.selected_preset.clone();
+        let preset_input =
+            text_input("Enter preset name", preset).on_input(Message::PresetInputChanged);
 
-        let load_btn = button("Load Preset")
-            .on_press(Message::LoadPreset);
+        let load_btn = button("Load Preset").on_press(Message::LoadPreset);
 
         let presets = row![preset_label, preset_input, load_btn]
             .spacing(10)
             .padding(10);
 
-        let play_btn = button("▶ Play")
-            .on_press(Message::Play);
+        let play_btn = button("▶ Play").on_press(Message::Play);
 
-        let pause_btn = button("⏸ Pause")
-            .on_press(Message::Pause);
+        let pause_btn = button("⏸ Pause").on_press(Message::Pause);
 
-        let reset_btn = button("↻ Reset")
-            .on_press(Message::Reset);
+        let reset_btn = button("↻ Reset").on_press(Message::Reset);
 
         let speed_label = text(format!("Speed: {:.1}x", self.speed));
-        let speed_slider = slider(0.1..=10.0, self.speed, Message::SpeedChanged)
-            .width(iced::Length::Fixed(200.0));
+        let speed_slider =
+            slider(0.1..=10.0, self.speed, Message::SpeedChanged).width(iced::Length::Fixed(200.0));
 
         let status = if self.is_running {
             text(format!("▶ Running | Ticks: {}", self.tick_count)).size(14)
@@ -212,15 +231,9 @@ impl Application for CellularApp {
             text(format!("⏸ Paused | Ticks: {}", self.tick_count)).size(14)
         };
 
-        let controls = row![
-            play_btn,
-            pause_btn,
-            reset_btn,
-            speed_label,
-            speed_slider
-        ]
-        .spacing(10)
-        .padding(10);
+        let controls = row![play_btn, pause_btn, reset_btn, speed_label, speed_slider]
+            .spacing(10)
+            .padding(10);
 
         // Get metrics for display
         let metrics_text = if let Ok(metrics) = self.metrics.lock() {
@@ -232,14 +245,8 @@ impl Application for CellularApp {
 
         let grid_display = GridDisplay::new(Arc::clone(&self.grid));
 
-        let main_column = column![
-            presets,
-            controls,
-            status,
-            metrics_text,
-            grid_display
-        ]
-        .spacing(10);
+        let main_column =
+            column![presets, controls, status, metrics_text, grid_display].spacing(10);
 
         container(main_column)
             .padding(10)
