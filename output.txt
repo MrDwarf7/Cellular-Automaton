@@ -1,0 +1,226 @@
+[2026-01-12 16:42:13.998 INFO ] === Cellular Simulation Started ===
+[2026-01-12 16:42:14.024 INFO ] Grid Size: 500x500 (250000 cells)
+[2026-01-12 16:42:14.024 INFO ] Preset: sparse_genesis
+[2026-01-12 16:42:14.024 INFO ] Chunk Size: 32x32
+[2026-01-12 16:42:14.512 INFO ] Debug utils not enabled: debug_utils_user_data not passed to Instance::from_raw
+[2026-01-12 16:42:14.597 INFO ] Settings {
+    present_mode: AutoVsync,
+    internal_backend: Backends(
+        VULKAN | GL | METAL | DX12 | BROWSER_WEBGPU,
+    ),
+    default_font: Font {
+        family: SansSerif,
+        weight: Normal,
+        stretch: Normal,
+        style: Normal,
+    },
+    default_text_size: Pixels(
+        16.0,
+    ),
+    antialiasing: None,
+}
+[2026-01-12 16:42:14.600 INFO ] Adapter Vulkan AdapterInfo { name: "NVIDIA GeForce RTX 2060", vendor: 4318, device: 7944, device_type: DiscreteGpu, driver: "NVIDIA", driver_info: "591.44", backend: Vulkan }
+[2026-01-12 16:42:14.815 INFO ] Adapter Dx12 AdapterInfo { name: "NVIDIA GeForce RTX 2060", vendor: 4318, device: 7944, device_type: DiscreteGpu, driver: "", driver_info: "", backend: Dx12 }
+[2026-01-12 16:42:14.815 INFO ] Adapter Dx12 AdapterInfo { name: "Microsoft Basic Render Driver", vendor: 5140, device: 140, device_type: Cpu, driver: "", driver_info: "", backend: Dx12 }
+[2026-01-12 16:42:14.816 INFO ] Adapter Gl AdapterInfo { name: "NVIDIA GeForce RTX 2060/PCIe/SSE2", vendor: 4318, device: 0, device_type: Other, driver: "", driver_info: "", backend: Gl }
+[2026-01-12 16:42:14.843 INFO ] Available adapters: [
+    AdapterInfo {
+        name: "NVIDIA GeForce RTX 2060",
+        vendor: 4318,
+        device: 7944,
+        device_type: DiscreteGpu,
+        driver: "NVIDIA",
+        driver_info: "591.44",
+        backend: Vulkan,
+    },
+    AdapterInfo {
+        name: "NVIDIA GeForce RTX 2060",
+        vendor: 4318,
+        device: 7944,
+        device_type: DiscreteGpu,
+        driver: "",
+        driver_info: "",
+        backend: Dx12,
+    },
+    AdapterInfo {
+        name: "Microsoft Basic Render Driver",
+        vendor: 5140,
+        device: 140,
+        device_type: Cpu,
+        driver: "",
+        driver_info: "",
+        backend: Dx12,
+    },
+    AdapterInfo {
+        name: "NVIDIA GeForce RTX 2060/PCIe/SSE2",
+        vendor: 4318,
+        device: 0,
+        device_type: Other,
+        driver: "",
+        driver_info: "",
+        backend: Gl,
+    },
+]
+[2026-01-12 16:42:14.853 WARN ] Unrecognized present mode 1000361000
+[2026-01-12 16:42:15.084 INFO ] Adapter Vulkan AdapterInfo { name: "NVIDIA GeForce RTX 2060", vendor: 4318, device: 7944, device_type: DiscreteGpu, driver: "NVIDIA", driver_info: "591.44", backend: Vulkan }
+[2026-01-12 16:42:15.084 INFO ] Selected: AdapterInfo {
+    name: "NVIDIA GeForce RTX 2060",
+    vendor: 4318,
+    device: 7944,
+    device_type: DiscreteGpu,
+    driver: "NVIDIA",
+    driver_info: "591.44",
+    backend: Vulkan,
+}
+[2026-01-12 16:42:15.088 WARN ] Unrecognized present mode 1000361000
+[2026-01-12 16:42:15.088 INFO ] Available formats: Copied {
+    it: Iter(
+        [
+            Bgra8UnormSrgb,
+            Rgba8UnormSrgb,
+            Bgra8Unorm,
+            Rgba8Unorm,
+            Rgba16Float,
+        ],
+    ),
+}
+[2026-01-12 16:42:15.088 INFO ] Available alpha modes: [
+    Opaque,
+]
+[2026-01-12 16:42:15.088 INFO ] Selected format: Bgra8UnormSrgb with alpha mode: Auto
+[2026-01-12 16:42:15.190 WARN ] Unrecognized present mode 1000361000
+[2026-01-12 16:42:15.526 INFO ] Parsed 187 font faces in 34ms.
+[2026-01-12 16:42:15.533 WARN ] Unrecognized present mode 1000361000
+[2026-01-12 16:42:15.538 INFO ] Allocated atlas entry: Contiguous(Partial { layer: 0, region: Region { id: AllocId(2), rectangle: Box2D((0, 0), (500, 500)) } })
+[2026-01-12 16:42:15.542 INFO ] Current atlas: Atlas { texture: Texture { context: ContextWgpuCore { type: "Native" }, id: ObjectId { id: Some(2305843013508661250), global_id: Some(2305843013508661250) }, data: Any { .. }, owned: true, descriptor: TextureDescriptor { label: None, size: (2048, 2048, 2), mip_level_count: 1, sample_count: 1, dimension: D2, format: Rgba8UnormSrgb, usage: TextureUsages(COPY_SRC | COPY_DST | TEXTURE_BINDING), view_formats: [] } }, texture_view: TextureView { context: ContextWgpuCore { type: "Native" }, id: ObjectId { id: Some(2305843013508661250), global_id: Some(2305843013508661250) }, data: Any { .. } }, layers: [Busy(Allocator), Empty] }
+[2026-01-12 16:42:34.263 WARN ] Unrecognized present mode 1000361000
+[2026-01-12 16:42:35.668 WARN ] Unrecognized present mode 1000361000
+[2026-01-12 16:42:36.633 DEBUG] Tick 1: 14.67ms (17036 cells/ms)
+[2026-01-12 16:42:36.665 DEBUG] Tick 2: 17.87ms (13988 cells/ms)
+[2026-01-12 16:42:36.721 INFO ] Allocated atlas entry: Contiguous(Partial { layer: 0, region: Region { id: AllocId(3), rectangle: Box2D((500, 0), (1000, 500)) } })
+[2026-01-12 16:42:36.722 INFO ] Current atlas: Atlas { texture: Texture { context: ContextWgpuCore { type: "Native" }, id: ObjectId { id: Some(2305843013508661250), global_id: Some(2305843013508661250) }, data: Any { .. }, owned: true, descriptor: TextureDescriptor { label: None, size: (2048, 2048, 2), mip_level_count: 1, sample_count: 1, dimension: D2, format: Rgba8UnormSrgb, usage: TextureUsages(COPY_SRC | COPY_DST | TEXTURE_BINDING), view_formats: [] } }, texture_view: TextureView { context: ContextWgpuCore { type: "Native" }, id: ObjectId { id: Some(2305843013508661250), global_id: Some(2305843013508661250) }, data: Any { .. } }, layers: [Busy(Allocator), Empty] }
+[2026-01-12 16:42:36.723 INFO ] Removing atlas entry: Contiguous(Partial { layer: 0, region: Region { id: AllocId(2), rectangle: Box2D((0, 0), (500, 500)) } })
+[2026-01-12 16:42:36.723 INFO ] Deallocating atlas: Partial { layer: 0, region: Region { id: AllocId(2), rectangle: Box2D((0, 0), (500, 500)) } }
+[2026-01-12 16:42:36.745 DEBUG] Tick 3: 20.92ms (11948 cells/ms)
+[2026-01-12 16:42:36.782 DEBUG] Tick 4: 21.37ms (11700 cells/ms)
+[2026-01-12 16:42:36.822 DEBUG] Tick 5: 25.18ms (9930 cells/ms)
+[2026-01-12 16:42:36.858 DEBUG] Tick 6: 21.96ms (11385 cells/ms)
+[2026-01-12 16:42:36.896 DEBUG] Tick 7: 23.21ms (10773 cells/ms)
+[2026-01-12 16:42:36.932 DEBUG] Tick 8: 21.68ms (11530 cells/ms)
+[2026-01-12 16:42:36.991 INFO ] Allocated atlas entry: Contiguous(Partial { layer: 0, region: Region { id: AllocId(4), rectangle: Box2D((1000, 0), (1500, 500)) } })
+[2026-01-12 16:42:36.992 INFO ] Current atlas: Atlas { texture: Texture { context: ContextWgpuCore { type: "Native" }, id: ObjectId { id: Some(2305843013508661250), global_id: Some(2305843013508661250) }, data: Any { .. }, owned: true, descriptor: TextureDescriptor { label: None, size: (2048, 2048, 2), mip_level_count: 1, sample_count: 1, dimension: D2, format: Rgba8UnormSrgb, usage: TextureUsages(COPY_SRC | COPY_DST | TEXTURE_BINDING), view_formats: [] } }, texture_view: TextureView { context: ContextWgpuCore { type: "Native" }, id: ObjectId { id: Some(2305843013508661250), global_id: Some(2305843013508661250) }, data: Any { .. } }, layers: [Busy(Allocator), Empty] }
+[2026-01-12 16:42:36.993 INFO ] Removing atlas entry: Contiguous(Partial { layer: 0, region: Region { id: AllocId(3), rectangle: Box2D((500, 0), (1000, 500)) } })
+[2026-01-12 16:42:36.993 INFO ] Deallocating atlas: Partial { layer: 0, region: Region { id: AllocId(3), rectangle: Box2D((500, 0), (1000, 500)) } }
+[2026-01-12 16:42:37.018 DEBUG] Tick 9: 24.20ms (10330 cells/ms)
+[2026-01-12 16:42:37.054 DEBUG] Tick 10: 22.68ms (11025 cells/ms)
+[2026-01-12 16:42:37.093 DEBUG] Tick 11: 23.93ms (10445 cells/ms)
+[2026-01-12 16:42:37.129 DEBUG] Tick 12: 22.36ms (11180 cells/ms)
+[2026-01-12 16:42:37.169 DEBUG] Tick 13: 24.54ms (10188 cells/ms)
+[2026-01-12 16:42:37.205 DEBUG] Tick 14: 22.20ms (11259 cells/ms)
+[2026-01-12 16:42:37.244 DEBUG] Tick 15: 24.96ms (10017 cells/ms)
+[2026-01-12 16:42:37.282 DEBUG] Tick 16: 22.89ms (10919 cells/ms)
+[2026-01-12 16:42:37.321 DEBUG] Tick 17: 25.36ms (9859 cells/ms)
+[2026-01-12 16:42:37.361 DEBUG] Tick 18: 24.56ms (10178 cells/ms)
+[2026-01-12 16:42:37.401 DEBUG] Tick 19: 26.26ms (9519 cells/ms)
+[2026-01-12 16:42:37.439 DEBUG] Tick 20: 23.78ms (10514 cells/ms)
+[2026-01-12 16:42:37.480 DEBUG] Tick 21: 25.62ms (9756 cells/ms)
+[2026-01-12 16:42:37.521 DEBUG] Tick 22: 26.88ms (9301 cells/ms)
+[2026-01-12 16:42:37.561 DEBUG] Tick 23: 25.75ms (9710 cells/ms)
+[2026-01-12 16:42:37.599 DEBUG] Tick 24: 23.35ms (10706 cells/ms)
+[2026-01-12 16:42:37.640 DEBUG] Tick 25: 27.11ms (9222 cells/ms)
+[2026-01-12 16:42:37.699 INFO ] Allocated atlas entry: Contiguous(Partial { layer: 0, region: Region { id: AllocId(2), rectangle: Box2D((0, 0), (500, 500)) } })
+[2026-01-12 16:42:37.700 INFO ] Current atlas: Atlas { texture: Texture { context: ContextWgpuCore { type: "Native" }, id: ObjectId { id: Some(2305843013508661250), global_id: Some(2305843013508661250) }, data: Any { .. }, owned: true, descriptor: TextureDescriptor { label: None, size: (2048, 2048, 2), mip_level_count: 1, sample_count: 1, dimension: D2, format: Rgba8UnormSrgb, usage: TextureUsages(COPY_SRC | COPY_DST | TEXTURE_BINDING), view_formats: [] } }, texture_view: TextureView { context: ContextWgpuCore { type: "Native" }, id: ObjectId { id: Some(2305843013508661250), global_id: Some(2305843013508661250) }, data: Any { .. } }, layers: [Busy(Allocator), Empty] }
+[2026-01-12 16:42:37.701 INFO ] Removing atlas entry: Contiguous(Partial { layer: 0, region: Region { id: AllocId(4), rectangle: Box2D((1000, 0), (1500, 500)) } })
+[2026-01-12 16:42:37.701 INFO ] Deallocating atlas: Partial { layer: 0, region: Region { id: AllocId(4), rectangle: Box2D((1000, 0), (1500, 500)) } }
+[2026-01-12 16:42:37.725 DEBUG] Tick 26: 23.72ms (10539 cells/ms)
+[2026-01-12 16:42:37.766 DEBUG] Tick 27: 26.21ms (9538 cells/ms)
+[2026-01-12 16:42:37.808 DEBUG] Tick 28: 28.01ms (8926 cells/ms)
+[2026-01-12 16:42:37.853 DEBUG] Tick 29: 30.11ms (8304 cells/ms)
+[2026-01-12 16:42:37.891 DEBUG] Tick 30: 23.71ms (10542 cells/ms)
+[2026-01-12 16:42:37.931 DEBUG] Tick 31: 26.42ms (9463 cells/ms)
+[2026-01-12 16:42:37.972 DEBUG] Tick 32: 26.05ms (9598 cells/ms)
+[2026-01-12 16:42:38.013 DEBUG] Tick 33: 27.14ms (9211 cells/ms)
+[2026-01-12 16:42:38.052 DEBUG] Tick 34: 24.40ms (10247 cells/ms)
+[2026-01-12 16:42:38.093 DEBUG] Tick 35: 26.77ms (9338 cells/ms)
+[2026-01-12 16:42:38.137 DEBUG] Tick 36: 27.69ms (9028 cells/ms)
+[2026-01-12 16:42:38.179 DEBUG] Tick 37: 27.38ms (9130 cells/ms)
+[2026-01-12 16:42:38.284 DEBUG] Tick 38: 50.41ms (4960 cells/ms)
+[2026-01-12 16:42:38.360 DEBUG] Tick 39: 53.91ms (4638 cells/ms)
+[2026-01-12 16:42:38.417 DEBUG] Tick 40: 33.99ms (7355 cells/ms)
+[2026-01-12 16:42:38.490 DEBUG] Tick 41: 37.68ms (6634 cells/ms)
+[2026-01-12 16:42:38.538 DEBUG] Tick 42: 28.73ms (8703 cells/ms)
+[2026-01-12 16:42:38.579 DEBUG] Tick 43: 27.33ms (9148 cells/ms)
+[2026-01-12 16:42:38.622 DEBUG] Tick 44: 25.30ms (9881 cells/ms)
+[2026-01-12 16:42:38.665 DEBUG] Tick 45: 27.56ms (9071 cells/ms)
+[2026-01-12 16:42:38.707 DEBUG] Tick 46: 27.38ms (9132 cells/ms)
+[2026-01-12 16:42:38.749 DEBUG] Tick 47: 27.74ms (9013 cells/ms)
+[2026-01-12 16:42:38.788 DEBUG] Tick 48: 24.95ms (10019 cells/ms)
+[2026-01-12 16:42:38.831 DEBUG] Tick 49: 28.25ms (8848 cells/ms)
+[2026-01-12 16:42:38.870 DEBUG] Tick 50: 25.15ms (9940 cells/ms)
+[2026-01-12 16:42:38.912 DEBUG] Tick 51: 27.81ms (8989 cells/ms)
+[2026-01-12 16:42:38.958 DEBUG] Tick 52: 31.67ms (7894 cells/ms)
+[2026-01-12 16:42:39.002 DEBUG] Tick 53: 28.96ms (8633 cells/ms)
+[2026-01-12 16:42:39.042 DEBUG] Tick 54: 25.23ms (9909 cells/ms)
+[2026-01-12 16:42:39.087 DEBUG] Tick 55: 29.81ms (8387 cells/ms)
+[2026-01-12 16:42:39.172 DEBUG] Tick 56: 49.19ms (5083 cells/ms)
+[2026-01-12 16:42:39.252 DEBUG] Tick 57: 57.40ms (4355 cells/ms)
+[2026-01-12 16:42:39.318 DEBUG] Tick 58: 43.32ms (5771 cells/ms)
+[2026-01-12 16:42:39.400 DEBUG] Tick 59: 57.62ms (4339 cells/ms)
+[2026-01-12 16:42:39.445 DEBUG] Tick 60: 30.16ms (8290 cells/ms)
+[2026-01-12 16:42:39.491 DEBUG] Tick 61: 29.92ms (8357 cells/ms)
+[2026-01-12 16:42:39.534 DEBUG] Tick 62: 27.87ms (8969 cells/ms)
+[2026-01-12 16:42:39.582 DEBUG] Tick 63: 33.32ms (7503 cells/ms)
+[2026-01-12 16:42:39.625 DEBUG] Tick 64: 28.34ms (8822 cells/ms)
+[2026-01-12 16:42:39.670 DEBUG] Tick 65: 29.91ms (8358 cells/ms)
+[2026-01-12 16:42:39.717 DEBUG] Tick 66: 31.57ms (7919 cells/ms)
+[2026-01-12 16:42:39.761 DEBUG] Tick 67: 30.30ms (8250 cells/ms)
+[2026-01-12 16:42:39.803 DEBUG] Tick 68: 26.71ms (9361 cells/ms)
+[2026-01-12 16:42:39.848 DEBUG] Tick 69: 29.86ms (8373 cells/ms)
+[2026-01-12 16:42:39.916 INFO ] Allocated atlas entry: Contiguous(Partial { layer: 0, region: Region { id: AllocId(16777219), rectangle: Box2D((500, 0), (1000, 500)) } })
+[2026-01-12 16:42:39.917 INFO ] Current atlas: Atlas { texture: Texture { context: ContextWgpuCore { type: "Native" }, id: ObjectId { id: Some(2305843013508661250), global_id: Some(2305843013508661250) }, data: Any { .. }, owned: true, descriptor: TextureDescriptor { label: None, size: (2048, 2048, 2), mip_level_count: 1, sample_count: 1, dimension: D2, format: Rgba8UnormSrgb, usage: TextureUsages(COPY_SRC | COPY_DST | TEXTURE_BINDING), view_formats: [] } }, texture_view: TextureView { context: ContextWgpuCore { type: "Native" }, id: ObjectId { id: Some(2305843013508661250), global_id: Some(2305843013508661250) }, data: Any { .. } }, layers: [Busy(Allocator), Empty] }
+[2026-01-12 16:42:39.918 INFO ] Removing atlas entry: Contiguous(Partial { layer: 0, region: Region { id: AllocId(2), rectangle: Box2D((0, 0), (500, 500)) } })
+[2026-01-12 16:42:39.918 INFO ] Deallocating atlas: Partial { layer: 0, region: Region { id: AllocId(2), rectangle: Box2D((0, 0), (500, 500)) } }
+[2026-01-12 16:42:39.946 DEBUG] Tick 70: 28.13ms (8889 cells/ms)
+[2026-01-12 16:42:39.990 DEBUG] Tick 71: 29.02ms (8616 cells/ms)
+[2026-01-12 16:42:40.035 DEBUG] Tick 72: 29.82ms (8384 cells/ms)
+[2026-01-12 16:42:40.084 DEBUG] Tick 73: 34.55ms (7237 cells/ms)
+[2026-01-12 16:42:40.128 DEBUG] Tick 74: 28.20ms (8864 cells/ms)
+[2026-01-12 16:42:40.172 DEBUG] Tick 75: 29.27ms (8542 cells/ms)
+[2026-01-12 16:42:40.212 DEBUG] Tick 76: 26.74ms (9351 cells/ms)
+[2026-01-12 16:42:40.256 DEBUG] Tick 77: 29.17ms (8570 cells/ms)
+[2026-01-12 16:42:40.299 DEBUG] Tick 78: 28.03ms (8918 cells/ms)
+[2026-01-12 16:42:40.342 DEBUG] Tick 79: 28.96ms (8633 cells/ms)
+[2026-01-12 16:42:40.386 DEBUG] Tick 80: 30.02ms (8327 cells/ms)
+[2026-01-12 16:42:40.432 DEBUG] Tick 81: 30.80ms (8117 cells/ms)
+[2026-01-12 16:42:40.478 DEBUG] Tick 82: 30.01ms (8332 cells/ms)
+[2026-01-12 16:42:40.522 DEBUG] Tick 83: 29.19ms (8564 cells/ms)
+[2026-01-12 16:42:40.564 DEBUG] Tick 84: 27.36ms (9139 cells/ms)
+[2026-01-12 16:42:40.608 DEBUG] Tick 85: 28.95ms (8634 cells/ms)
+[2026-01-12 16:42:40.650 DEBUG] Tick 86: 28.14ms (8885 cells/ms)
+[2026-01-12 16:42:40.694 DEBUG] Tick 87: 29.65ms (8431 cells/ms)
+[2026-01-12 16:42:40.738 DEBUG] Tick 88: 29.38ms (8509 cells/ms)
+[2026-01-12 16:42:40.786 DEBUG] Tick 89: 32.26ms (7748 cells/ms)
+[2026-01-12 16:42:40.835 DEBUG] Tick 90: 33.75ms (7408 cells/ms)
+[2026-01-12 16:42:40.887 DEBUG] Tick 91: 34.79ms (7186 cells/ms)
+[2026-01-12 16:42:40.930 DEBUG] Tick 92: 27.51ms (9087 cells/ms)
+[2026-01-12 16:42:40.979 DEBUG] Tick 93: 32.66ms (7655 cells/ms)
+[2026-01-12 16:42:41.025 DEBUG] Tick 94: 31.18ms (8018 cells/ms)
+[2026-01-12 16:42:41.070 DEBUG] Tick 95: 30.43ms (8216 cells/ms)
+[2026-01-12 16:42:41.112 DEBUG] Tick 96: 27.49ms (9095 cells/ms)
+[2026-01-12 16:42:41.156 DEBUG] Tick 97: 30.02ms (8328 cells/ms)
+[2026-01-12 16:42:41.199 DEBUG] Tick 98: 27.76ms (9006 cells/ms)
+[2026-01-12 16:42:41.244 DEBUG] Tick 99: 30.88ms (8095 cells/ms)
+[2026-01-12 16:42:41.286 DEBUG] Tick 100: 27.68ms (9032 cells/ms)
+[2026-01-12 16:42:41.334 DEBUG] Tick 101: 33.71ms (7416 cells/ms)
+[2026-01-12 16:42:41.378 DEBUG] Tick 102: 30.20ms (8279 cells/ms)
+[2026-01-12 16:42:41.422 DEBUG] Tick 103: 29.48ms (8482 cells/ms)
+[2026-01-12 16:42:41.465 DEBUG] Tick 104: 28.64ms (8730 cells/ms)
+[2026-01-12 16:42:41.511 DEBUG] Tick 105: 31.04ms (8055 cells/ms)
+[2026-01-12 16:42:41.557 DEBUG] Tick 106: 31.80ms (7862 cells/ms)
+[2026-01-12 16:42:41.604 DEBUG] Tick 107: 31.95ms (7826 cells/ms)
+[2026-01-12 16:42:41.648 DEBUG] Tick 108: 29.35ms (8517 cells/ms)
+[2026-01-12 16:42:41.694 DEBUG] Tick 109: 31.12ms (8034 cells/ms)
+[2026-01-12 16:42:41.738 DEBUG] Tick 110: 28.96ms (8633 cells/ms)
+[2026-01-12 16:42:41.783 DEBUG] Tick 111: 30.91ms (8088 cells/ms)
+[2026-01-12 16:42:41.825 DEBUG] Tick 112: 28.54ms (8761 cells/ms)
+[2026-01-12 16:42:41.874 DEBUG] Tick 113: 34.09ms (7334 cells/ms)

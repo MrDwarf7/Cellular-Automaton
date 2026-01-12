@@ -1,0 +1,49 @@
+[package]
+name = "cellular_sim"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["rlib"]
+
+[[bin]]
+name = "cellular_sim"
+path = "src/main.rs"
+
+[dependencies]
+# Core simulation
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+rand = "0.8"
+
+# Logging and metrics
+log = "0.4"
+fern = { version = "0.6", features = ["colored"] }
+chrono = "0.4"
+sysinfo = "0.30"
+
+# Parallelization
+rayon = "1.7"
+
+# Iced GUI framework
+iced = { version = "0.12", features = ["debug", "tokio", "image"] }
+tokio = { version = "1", features = ["time"] }
+futures = "0.3"
+
+# Image rendering
+image = "0.24"
+imageproc = "0.23"
+
+[dev-dependencies]
+
+[features]
+default = []
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true
+
+[build]
+jobs = 100
